@@ -21,7 +21,7 @@ class IndexView(TemplateView):
         return TemplateResponse(request, self.template_name, context)
 
 class CatalogView(TemplateView):
-    template = 'main/base.html'
+    template_name = 'main/base.html'
 
     FILTER_MAPPING = {
         'color': lambda queryset, value: queryset.filter(color__iexact=value),
@@ -104,6 +104,6 @@ class ProductDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(**kwargs)
-        if request.header.get('HX-Request'):
+        if request.headers.get('HX-Request'):
             return TemplateResponse(request,'main/product_detail.html', context)
         raise TemplateResponse(request, self.template_name, context)
