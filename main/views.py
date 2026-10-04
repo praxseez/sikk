@@ -10,13 +10,13 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context('categories') = Category.objects.all()
+        context['categories'] = Category.objects.all()
         context['current_category'] = None
         return context
     
     def get(self,request,*args,**kwargs):
         context = self.get_context_data(**kwargs)
-        if request.header.get('HX-Request'):
+        if request.headers.get('HX-Request'):
             return TemplateResponse(request, 'main/home_content.html', context)
         return TemplateResponse(request, self.template_name, context)
 
@@ -76,7 +76,7 @@ class CatalogView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        if request.header.get('HX-Request'):
+        if request.headers.get('HX-Request'):
             if context.get('show_search'):
                 return TemplateResponse(request, 'main/search_input.html', context)
             elif context.get('reset_search'):
