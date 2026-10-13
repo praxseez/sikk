@@ -1,3 +1,5 @@
+pip install -r requirements
+
 python manage.py migrate --fake-initial
 
 from main.models import Product
